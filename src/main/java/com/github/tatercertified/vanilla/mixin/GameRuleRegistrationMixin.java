@@ -26,6 +26,12 @@ public abstract class GameRuleRegistrationMixin {
         return null;
     }
 
+    @Shadow
+    private static GameRule<Boolean> registerBoolean(
+            String name, GameRuleCategory category, boolean defaultValue) {
+        return null;
+    }
+
     @Inject(
             method = "<clinit>",
             at =
@@ -37,5 +43,7 @@ public abstract class GameRuleRegistrationMixin {
     private static void nodim$registerGameRules(CallbackInfo ci) {
         FairFight.IN_COMBAT_TIME =
                 registerInteger("in_combat_ticks", GameRuleCategory.PLAYER, 300, 1);
+        FairFight.COMBAT_TIME_SHOWN =
+                registerBoolean("combat_time_shown", GameRuleCategory.PLAYER, true);
     }
 }

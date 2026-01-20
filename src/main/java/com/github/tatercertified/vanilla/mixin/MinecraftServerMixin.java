@@ -10,6 +10,8 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.phys.Vec3;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -30,6 +32,17 @@ public abstract class MinecraftServerMixin {
         Iterator<ServerPlayer> iterator2 = FairFight.COMBAT_LOG_LIST.values().iterator();
         while (iterator2.hasNext()) {
             ServerPlayer player = iterator2.next();
+
+            // Apply gravity manually
+            if (!player.onGround()) {
+                Vec3 vel = player.getDeltaMovement();
+                player.setDeltaMovement(vel.x, vel.y - 0.08, vel.z);
+            }
+            player.move(MoverType.SELF, player.getDeltaMovement());
+            player.needsSync = true;
+
+            ((ServerGamePacketListenerImplInvokerMixin) player.connection).invokeTickPlayer();
+
             if (this.getTickCount() % 20 == 0) {
                 player.getCombatTracker().recheckStatus();
             }

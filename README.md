@@ -9,8 +9,9 @@ combat! This will allow the person who was attacking them to continue attacking 
 ---
 
 ## Configuration
-This mod has a single gamerule: `in_combat_ticks`. This gamerule allows you to set how many ticks after being attacked
-the game should wait until the player is considered not in combat. By default, this is 300 ticks (15s)
+This mod has 2 gamerules. The first is `in_combat_ticks`. This gamerule allows you to set how many ticks after being attacked
+the game should wait until the player is considered not in combat. By default, this is 300 ticks (15s).
+The second is `combat_time_shown`. This gamerule toggles the combat time cooldown overlay.
 
 ---
 

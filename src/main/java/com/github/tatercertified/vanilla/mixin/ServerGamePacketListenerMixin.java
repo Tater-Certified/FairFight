@@ -28,7 +28,7 @@ public class ServerGamePacketListenerMixin {
                             value = "INVOKE",
                             target =
                                     "Lnet/minecraft/server/players/PlayerList;remove(Lnet/minecraft/server/level/ServerPlayer;)V"))
-    private void lifesteal$removePlayerFromWorld(
+    private void fairfight$removePlayerFromWorld(
             PlayerList instance, ServerPlayer serverPlayer, Operation<Void> original) {
         if (!((CombatTrackerAccessor) (serverPlayer.getCombatTracker())).isInCombat()) {
             original.call(instance, serverPlayer);
@@ -44,7 +44,7 @@ public class ServerGamePacketListenerMixin {
                             value = "INVOKE",
                             target =
                                     "Lnet/minecraft/server/players/PlayerList;broadcastSystemMessage(Lnet/minecraft/network/chat/Component;Z)V"))
-    private void lifesteal$removePlayerFromWorld(
+    private void fairfight$removePlayerFromWorld(
             PlayerList instance, Component component, boolean bl, Operation<Void> original) {
         if (!((CombatTrackerAccessor) (this.player.getCombatTracker())).isInCombat()) {
             original.call(instance, component, bl);

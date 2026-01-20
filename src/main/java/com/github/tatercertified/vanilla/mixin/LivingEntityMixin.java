@@ -4,10 +4,15 @@
  */
 package com.github.tatercertified.vanilla.mixin;
 
+import com.github.tatercertified.vanilla.FairFight;
+
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.level.gamerules.GameRules;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -39,6 +44,52 @@ public class LivingEntityMixin {
                                             serverPlayer.getDisplayName())
                                     .withStyle(ChatFormatting.YELLOW),
                             false);
+        }
+    }
+
+    @Inject(
+            method = "tick",
+            at =
+                    @At(
+                            value = "INVOKE",
+                            target =
+                                    "Lnet/minecraft/world/damagesource/CombatTracker;recheckStatus()V",
+                            shift = At.Shift.AFTER))
+    private void fairfight$showCombatTime(CallbackInfo ci) {
+        if ((LivingEntity) (Object) this instanceof ServerPlayer serverPlayer) {
+            GameRules gameRules = serverPlayer.level().getGameRules();
+            if (((CombatTrackerAccessor) (serverPlayer.getCombatTracker())).isInCombat()
+                    && gameRules.get(FairFight.COMBAT_TIME_SHOWN)) {
+                int seconds = getSecondsInCombat(serverPlayer, gameRules);
+                if (seconds > 0) {
+                    serverPlayer.sendSystemMessage(
+                            Component.literal("You are in combat for " + seconds + " more seconds"),
+                            true);
+                }
+            }
+        }
+    }
+
+    private int getSecondsInCombat(ServerPlayer serverPlayer, GameRules gameRules) {
+        int combatDuration =
+                ((CombatTrackerAccessor) serverPlayer.getCombatTracker()).getMob().tickCount
+                        - ((CombatTrackerAccessor) serverPlayer.getCombatTracker())
+                                .getLastDamageTime();
+        return Mth.ceil((gameRules.get(FairFight.IN_COMBAT_TIME) - combatDuration) / 20.0F);
+    }
+
+    @Inject(
+            method = "knockback",
+            at =
+                    @At(
+                            value = "INVOKE",
+                            target =
+                                    "Lnet/minecraft/world/entity/LivingEntity;setDeltaMovement(DDD)V",
+                            shift = At.Shift.AFTER))
+    private void fairfight$simulateKnockback(CallbackInfo ci) {
+        if ((LivingEntity) (Object) this instanceof ServerPlayer serverPlayer
+                && serverPlayer.hasDisconnected()) {
+            serverPlayer.move(MoverType.SELF, serverPlayer.getDeltaMovement());
         }
     }
 }

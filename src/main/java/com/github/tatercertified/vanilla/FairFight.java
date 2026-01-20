@@ -16,4 +16,5 @@ public class FairFight {
     public static final String MOD_ID = "fairfight";
 
     public static GameRule<Integer> IN_COMBAT_TIME;
+    public static GameRule<Boolean> COMBAT_TIME_SHOWN;
 }
