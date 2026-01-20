@@ -1,0 +1,21 @@
+{
+  "compatibilityLevel": "JAVA_16",
+  "required": false,
+  "minVersion": "0.8",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "package": "com.github.tatercertified.vanilla.mixin",
+  "mixins": [
+    "CombatTrackerAccessor",
+    "CombatTrackerMixin",
+    "GameRuleRegistrationMixin",
+    "LivingEntityMixin",
+    "MinecraftServerMixin",
+    "PlayerListMixin",
+    "ServerGamePacketListenerMixin",
+    "ServerPlayerMixin"
+  ],
+  "client": [],
+  "server": []
+}
