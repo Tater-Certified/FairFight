@@ -45,5 +45,7 @@ public abstract class GameRuleRegistrationMixin {
                 registerInteger("in_combat_ticks", GameRuleCategory.PLAYER, 300, 1);
         FairFight.COMBAT_TIME_SHOWN =
                 registerBoolean("combat_time_shown", GameRuleCategory.PLAYER, true);
+        FairFight.COMBAT_LOGGER_PLAYERS_ONLY =
+                registerBoolean("combat_logger_players_only", GameRuleCategory.PLAYER, true);
     }
 }

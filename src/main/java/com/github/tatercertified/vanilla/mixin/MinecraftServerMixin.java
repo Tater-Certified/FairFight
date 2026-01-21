@@ -4,6 +4,7 @@
  */
 package com.github.tatercertified.vanilla.mixin;
 
+import com.github.tatercertified.vanilla.CombatLogger;
 import com.github.tatercertified.vanilla.FairFight;
 
 import net.minecraft.ChatFormatting;
@@ -47,7 +48,7 @@ public abstract class MinecraftServerMixin {
                 player.getCombatTracker().recheckStatus();
             }
 
-            if (!((CombatTrackerAccessor) (player.getCombatTracker())).isInCombat()) {
+            if (!CombatLogger.isInCombat(player)) {
                 player.level().getServer().getPlayerList().remove(player);
                 player.level()
                         .getServer()

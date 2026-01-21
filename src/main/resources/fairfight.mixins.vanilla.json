@@ -7,7 +7,6 @@
   },
   "package": "com.github.tatercertified.vanilla.mixin",
   "mixins": [
-    "CombatTrackerAccessor",
     "CombatTrackerMixin",
     "GameRuleRegistrationMixin",
     "LivingEntityMixin",

@@ -4,12 +4,12 @@
  */
 package com.github.tatercertified.vanilla.mixin;
 
+import com.github.tatercertified.vanilla.CombatLogger;
 import com.github.tatercertified.vanilla.FairFight;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.level.gamerules.GameRules;
@@ -32,7 +32,7 @@ public class LivingEntityMixin {
     private void lifesteal$checkIfDead(CallbackInfo ci) {
         if ((LivingEntity) (Object) this instanceof ServerPlayer serverPlayer
                 && serverPlayer.hasDisconnected()
-                && !((CombatTrackerAccessor) (serverPlayer.getCombatTracker())).isInCombat()) {
+                && !CombatLogger.isInCombat(serverPlayer)) {
             serverPlayer.level().getServer().getPlayerList().remove(serverPlayer);
             serverPlayer
                     .level()
@@ -58,9 +58,9 @@ public class LivingEntityMixin {
     private void fairfight$showCombatTime(CallbackInfo ci) {
         if ((LivingEntity) (Object) this instanceof ServerPlayer serverPlayer) {
             GameRules gameRules = serverPlayer.level().getGameRules();
-            if (((CombatTrackerAccessor) (serverPlayer.getCombatTracker())).isInCombat()
+            if (CombatLogger.isInCombat(serverPlayer)
                     && gameRules.get(FairFight.COMBAT_TIME_SHOWN)) {
-                int seconds = getSecondsInCombat(serverPlayer, gameRules);
+                int seconds = CombatLogger.getCombatSecondsLeft(serverPlayer);
                 if (seconds > 0) {
                     serverPlayer.sendSystemMessage(
                             Component.literal("You are in combat for " + seconds + " more seconds"),
@@ -68,14 +68,6 @@ public class LivingEntityMixin {
                 }
             }
         }
-    }
-
-    private int getSecondsInCombat(ServerPlayer serverPlayer, GameRules gameRules) {
-        int combatDuration =
-                ((CombatTrackerAccessor) serverPlayer.getCombatTracker()).getMob().tickCount
-                        - ((CombatTrackerAccessor) serverPlayer.getCombatTracker())
-                                .getLastDamageTime();
-        return Mth.ceil((gameRules.get(FairFight.IN_COMBAT_TIME) - combatDuration) / 20.0F);
     }
 
     @Inject(

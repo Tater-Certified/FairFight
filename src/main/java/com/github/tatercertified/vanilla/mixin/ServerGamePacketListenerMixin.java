@@ -4,6 +4,7 @@
  */
 package com.github.tatercertified.vanilla.mixin;
 
+import com.github.tatercertified.vanilla.CombatLogger;
 import com.github.tatercertified.vanilla.FairFight;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -30,7 +31,7 @@ public class ServerGamePacketListenerMixin {
                                     "Lnet/minecraft/server/players/PlayerList;remove(Lnet/minecraft/server/level/ServerPlayer;)V"))
     private void fairfight$removePlayerFromWorld(
             PlayerList instance, ServerPlayer serverPlayer, Operation<Void> original) {
-        if (!((CombatTrackerAccessor) (serverPlayer.getCombatTracker())).isInCombat()) {
+        if (!CombatLogger.isInCombat(serverPlayer)) {
             original.call(instance, serverPlayer);
         } else {
             FairFight.COMBAT_LOG_LIST.put(serverPlayer.getUUID(), serverPlayer);
@@ -46,7 +47,7 @@ public class ServerGamePacketListenerMixin {
                                     "Lnet/minecraft/server/players/PlayerList;broadcastSystemMessage(Lnet/minecraft/network/chat/Component;Z)V"))
     private void fairfight$removePlayerFromWorld(
             PlayerList instance, Component component, boolean bl, Operation<Void> original) {
-        if (!((CombatTrackerAccessor) (this.player.getCombatTracker())).isInCombat()) {
+        if (!CombatLogger.isInCombat(this.player)) {
             original.call(instance, component, bl);
         } else {
             FairFight.COMBAT_LOG_LIST.put(this.player.getUUID(), this.player);

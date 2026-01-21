@@ -4,6 +4,7 @@
  */
 package com.github.tatercertified.vanilla.mixin;
 
+import com.github.tatercertified.vanilla.CombatLogger;
 import com.github.tatercertified.vanilla.FairFight;
 import com.mojang.authlib.GameProfile;
 
@@ -36,8 +37,7 @@ public abstract class ServerPlayerMixin extends Player {
 
     @Inject(method = "die", at = @At("TAIL"))
     private void lifesteal$onDeath(DamageSource damageSource, CallbackInfo ci) {
-        if (this.hasDisconnected()
-                && !((CombatTrackerAccessor) (this.getCombatTracker())).isInCombat()) {
+        if (this.hasDisconnected() && !CombatLogger.isInCombat((ServerPlayer) (Object) this)) {
             this.level().getServer().getPlayerList().remove((ServerPlayer) (Object) this);
             this.level()
                     .getServer()
