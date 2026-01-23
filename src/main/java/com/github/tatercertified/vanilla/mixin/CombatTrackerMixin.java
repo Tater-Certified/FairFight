@@ -69,8 +69,16 @@ public class CombatTrackerMixin implements CombatLogger {
         }
     }
 
-    @Inject(method = "recheckStatus", at = @At("TAIL"))
-    private void fairfight$recheckStatus(CallbackInfo ci, @Local(name = "i") int i) {
+    @Inject(
+            method = "recheckStatus",
+            at =
+                    @At(
+                            value = "FIELD",
+                            target =
+                                    "Lnet/minecraft/world/damagesource/CombatTracker;takingDamage:Z",
+                            ordinal = 0,
+                            opcode = Opcodes.GETFIELD))
+    private void fairfight$recheckStatus(CallbackInfo ci, @Local(ordinal = 0) int i) {
         if (this.inPlayerCombat && this.mob.tickCount - this.lastPlayerDamageTime > i) {
             this.inPlayerCombat = false;
         }

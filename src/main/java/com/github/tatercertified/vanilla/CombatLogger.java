@@ -19,18 +19,18 @@ public interface CombatLogger {
     static boolean isInCombat(ServerPlayer player) {
         GameRules gameRules = player.level().getGameRules();
         if (gameRules.get(FairFight.COMBAT_LOGGER_PLAYERS_ONLY)) {
-            return ((CombatLogger) player).isInPlayerCombat();
+            return ((CombatLogger) player.getCombatTracker()).isInPlayerCombat();
         } else {
-            return ((CombatLogger) player).isInCombat();
+            return ((CombatLogger) player.getCombatTracker()).isInCombat();
         }
     }
 
     static int getCombatSecondsLeft(ServerPlayer player) {
         GameRules gameRules = player.level().getGameRules();
         if (gameRules.get(FairFight.COMBAT_LOGGER_PLAYERS_ONLY)) {
-            return ((CombatLogger) player).getPlayerCombatSecondsLeft();
+            return ((CombatLogger) player.getCombatTracker()).getPlayerCombatSecondsLeft();
         } else {
-            return ((CombatLogger) player).getCombatSecondsLeft();
+            return ((CombatLogger) player.getCombatTracker()).getCombatSecondsLeft();
         }
     }
 }

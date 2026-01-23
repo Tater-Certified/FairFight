@@ -29,7 +29,7 @@ public class LivingEntityMixin {
                             target =
                                     "Lnet/minecraft/world/damagesource/CombatTracker;recheckStatus()V",
                             shift = At.Shift.AFTER))
-    private void lifesteal$checkIfDead(CallbackInfo ci) {
+    private void fairfight$checkIfDead(CallbackInfo ci) {
         if ((LivingEntity) (Object) this instanceof ServerPlayer serverPlayer
                 && serverPlayer.hasDisconnected()
                 && !CombatLogger.isInCombat(serverPlayer)) {

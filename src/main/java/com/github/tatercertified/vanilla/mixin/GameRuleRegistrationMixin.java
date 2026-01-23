@@ -40,12 +40,14 @@ public abstract class GameRuleRegistrationMixin {
                             target =
                                     "Lnet/minecraft/world/level/gamerules/GameRules;FIRE_SPREAD_RADIUS_AROUND_PLAYER:Lnet/minecraft/world/level/gamerules/GameRule;",
                             opcode = Opcodes.PUTSTATIC))
-    private static void nodim$registerGameRules(CallbackInfo ci) {
+    private static void fairfight$registerGameRules(CallbackInfo ci) {
         FairFight.IN_COMBAT_TIME =
                 registerInteger("in_combat_ticks", GameRuleCategory.PLAYER, 300, 1);
         FairFight.COMBAT_TIME_SHOWN =
                 registerBoolean("combat_time_shown", GameRuleCategory.PLAYER, true);
         FairFight.COMBAT_LOGGER_PLAYERS_ONLY =
                 registerBoolean("combat_logger_players_only", GameRuleCategory.PLAYER, true);
+        FairFight.DISABLE_ELYTRA_IN_COMBAT =
+                registerBoolean("disable_elytra_in_combat", GameRuleCategory.PLAYER, false);
     }
 }

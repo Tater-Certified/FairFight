@@ -36,7 +36,7 @@ public abstract class ServerPlayerMixin extends Player {
     public abstract boolean hasDisconnected();
 
     @Inject(method = "die", at = @At("TAIL"))
-    private void lifesteal$onDeath(DamageSource damageSource, CallbackInfo ci) {
+    private void fairfight$onDeath(DamageSource damageSource, CallbackInfo ci) {
         if (this.hasDisconnected() && !CombatLogger.isInCombat((ServerPlayer) (Object) this)) {
             this.level().getServer().getPlayerList().remove((ServerPlayer) (Object) this);
             this.level()

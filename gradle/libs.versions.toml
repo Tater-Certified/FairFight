@@ -7,7 +7,7 @@ unimined = "8e64092954"
 annotations = { group = "org.jetbrains", name = "annotations", version = "26.0.2" }
 ignite-api = { group = "space.vectrix.ignite", name = "ignite-api", version = "1.1.0" }
 mixin = { group = "org.spongepowered", name = "mixin", version = "0.8.5-SNAPSHOT" }
-mixinextras = { group = "io.github.llamalad7", name = "mixinextras-common", version = "0.5.2"}
+mixinextras = { group = "io.github.llamalad7", name = "mixinextras-common", version = "0.5.3"}
 asm = { group = "org.ow2.asm", name = "asm-tree", version = "9.7.1"}
 
 [plugins]

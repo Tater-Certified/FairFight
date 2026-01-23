@@ -9,11 +9,12 @@ combat! This will allow the person who was attacking them to continue attacking 
 ---
 
 ## Configuration
-This mod has 3 gamerules:
+This mod has 4 gamerules:
 - `in_combat_ticks`: Allows you to set how many ticks after being attacked
 the game should wait until the player is considered not in combat. By default, this is 300 ticks (15s).
 - `combat_time_shown`: Toggles the combat time cooldown overlay.
 - `combat_logger_players_only`: Only counts combat between players and ignores other mobs
+- `disable_elytra_in_combat`: Disables elytra flight when in combat
 
 ---
 
