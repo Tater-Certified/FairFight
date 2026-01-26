@@ -4,6 +4,7 @@
  */
 package com.github.tatercertified.vanilla.mixin;
 
+import com.github.tatercertified.vanilla.CombatLogPlayerRemoval;
 import com.github.tatercertified.vanilla.CombatLogger;
 import com.github.tatercertified.vanilla.FairFight;
 
@@ -19,8 +20,12 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.Iterator;
+
 @Mixin(LivingEntity.class)
-public class LivingEntityMixin {
+public class LivingEntityMixin implements CombatLogPlayerRemoval {
+    private boolean markFakeRemoval;
+
     @Inject(
             method = "tick",
             at =
@@ -33,7 +38,7 @@ public class LivingEntityMixin {
         if ((LivingEntity) (Object) this instanceof ServerPlayer serverPlayer
                 && serverPlayer.hasDisconnected()
                 && !CombatLogger.isInCombat(serverPlayer)) {
-            serverPlayer.level().getServer().getPlayerList().remove(serverPlayer);
+            markFakeRemoval = true;
             serverPlayer
                     .level()
                     .getServer()
@@ -82,6 +87,14 @@ public class LivingEntityMixin {
         if ((LivingEntity) (Object) this instanceof ServerPlayer serverPlayer
                 && serverPlayer.hasDisconnected()) {
             serverPlayer.move(MoverType.SELF, serverPlayer.getDeltaMovement());
+        }
+    }
+
+    @Override
+    public void removePlayer(Iterator<ServerPlayer> players, ServerPlayer current) {
+        if (this.markFakeRemoval) {
+            current.level().getServer().getPlayerList().remove(current);
+            players.remove();
         }
     }
 }

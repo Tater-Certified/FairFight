@@ -4,11 +4,9 @@
  */
 package com.github.tatercertified.vanilla.mixin;
 
-import com.github.tatercertified.vanilla.CombatLogger;
+import com.github.tatercertified.vanilla.CombatLogPlayerRemoval;
 import com.github.tatercertified.vanilla.FairFight;
 
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.MoverType;
@@ -46,19 +44,7 @@ public abstract class MinecraftServerMixin {
 
             if (this.getTickCount() % 20 == 0) {
                 player.getCombatTracker().recheckStatus();
-            }
-
-            if (!CombatLogger.isInCombat(player)) {
-                player.level().getServer().getPlayerList().remove(player);
-                player.level()
-                        .getServer()
-                        .getPlayerList()
-                        .broadcastSystemMessage(
-                                Component.translatable(
-                                                "multiplayer.player.left", player.getDisplayName())
-                                        .withStyle(ChatFormatting.YELLOW),
-                                false);
-                iterator2.remove();
+                ((CombatLogPlayerRemoval) player).removePlayer(iterator2, player);
             }
         }
     }

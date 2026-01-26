@@ -38,7 +38,6 @@ public abstract class ServerPlayerMixin extends Player {
     @Inject(method = "die", at = @At("TAIL"))
     private void fairfight$onDeath(DamageSource damageSource, CallbackInfo ci) {
         if (this.hasDisconnected() && !CombatLogger.isInCombat((ServerPlayer) (Object) this)) {
-            this.level().getServer().getPlayerList().remove((ServerPlayer) (Object) this);
             this.level()
                     .getServer()
                     .getPlayerList()
@@ -46,6 +45,7 @@ public abstract class ServerPlayerMixin extends Player {
                             Component.translatable("multiplayer.player.left", this.getDisplayName())
                                     .withStyle(ChatFormatting.YELLOW),
                             false);
+            this.level().getServer().getPlayerList().remove((ServerPlayer) (Object) this);
             FairFight.COMBAT_LOG_LIST.remove(this.getUUID());
         }
     }

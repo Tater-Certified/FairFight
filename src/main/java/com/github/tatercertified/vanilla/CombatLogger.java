@@ -16,6 +16,10 @@ public interface CombatLogger {
 
     int getCombatSecondsLeft();
 
+    void copyCombatStatus(Object[] combatInfo);
+
+    Object[] getCombatTrackerInfo();
+
     static boolean isInCombat(ServerPlayer player) {
         GameRules gameRules = player.level().getGameRules();
         if (gameRules.get(FairFight.COMBAT_LOGGER_PLAYERS_ONLY)) {

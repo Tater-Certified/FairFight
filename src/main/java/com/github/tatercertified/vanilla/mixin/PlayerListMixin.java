@@ -4,13 +4,13 @@
  */
 package com.github.tatercertified.vanilla.mixin;
 
+import com.github.tatercertified.vanilla.CombatLogger;
 import com.github.tatercertified.vanilla.FairFight;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.PlayerList;
 
@@ -19,13 +19,12 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
 import java.util.UUID;
 
 @Mixin(PlayerList.class)
 public class PlayerListMixin {
-    private final Set<UUID> cancelLogin = new HashSet<>();
+    private final HashMap<UUID, Object[]> transferredCombatData = new HashMap<>();
 
     @Inject(
             method = "disconnectAllPlayersWithProfile",
@@ -35,8 +34,9 @@ public class PlayerListMixin {
             UUID uuid, CallbackInfoReturnable<Boolean> cir, @Local ServerPlayer serverPlayer) {
         if (serverPlayer.hasDisconnected()) {
             FairFight.COMBAT_LOG_LIST.remove(uuid);
+            transferredCombatData.put(
+                    uuid, ((CombatLogger) serverPlayer.getCombatTracker()).getCombatTrackerInfo());
             serverPlayer.level().getServer().getPlayerList().remove(serverPlayer);
-            cancelLogin.add(uuid);
             cir.setReturnValue(false);
         }
     }
@@ -47,18 +47,19 @@ public class PlayerListMixin {
                     @At(
                             value = "INVOKE",
                             target =
-                                    "Lnet/minecraft/network/chat/Component;translatable(Ljava/lang/String;[Ljava/lang/Object;)Lnet/minecraft/network/chat/MutableComponent;",
+                                    "Lnet/minecraft/server/players/PlayerList;broadcastSystemMessage(Lnet/minecraft/network/chat/Component;Z)V",
                             ordinal = 0))
-    private MutableComponent fairfight$cancelLoginMessage(
-            String string,
-            Object[] objects,
-            Operation<MutableComponent> original,
+    private void fairfight$cancelLoginMessage(
+            PlayerList instance,
+            Component message,
+            boolean bypassHiddenChat,
+            Operation<Void> original,
             @Local(argsOnly = true) ServerPlayer serverPlayer) {
-        if (cancelLogin.contains(serverPlayer.getUUID())) {
-            cancelLogin.remove(serverPlayer.getUUID());
-            return Component.empty();
+        if (transferredCombatData.containsKey(serverPlayer.getUUID())) {
+            ((CombatLogger) serverPlayer.getCombatTracker())
+                    .copyCombatStatus(transferredCombatData.remove(serverPlayer.getUUID()));
         } else {
-            return original.call(string, objects);
+            original.call(instance, message, bypassHiddenChat);
         }
     }
 }

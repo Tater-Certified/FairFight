@@ -119,4 +119,30 @@ public class CombatTrackerMixin implements CombatLogger {
                             / 20.0F);
         }
     }
+
+    @Override
+    public void copyCombatStatus(Object[] originalInfo) {
+        this.inPlayerCombat = (boolean) originalInfo[0];
+        int lastPlayerDamageTime = (int) originalInfo[1];
+        this.inCombat = (boolean) originalInfo[2];
+        int lastDamageTime = (int) originalInfo[3];
+        int mobTickCount = (int) originalInfo[4];
+
+        // Calculate proper lastPlayerDamageTime
+        int playerDamagerDurationTicks = mobTickCount - lastPlayerDamageTime;
+        int damageDurationTicks = mobTickCount - lastDamageTime;
+        this.lastPlayerDamageTime = this.mob.tickCount - playerDamagerDurationTicks;
+        this.lastDamageTime = this.mob.tickCount - damageDurationTicks;
+    }
+
+    @Override
+    public Object[] getCombatTrackerInfo() {
+        return new Object[] {
+            this.inPlayerCombat,
+            this.lastPlayerDamageTime,
+            this.inCombat,
+            this.lastDamageTime,
+            this.mob.tickCount
+        };
+    }
 }
