@@ -7,20 +7,17 @@ package com.github.tatercertified.vanilla.mixin;
 import com.github.tatercertified.vanilla.CombatLogPlayerRemoval;
 import com.github.tatercertified.vanilla.CombatLogger;
 import com.github.tatercertified.vanilla.FairFight;
-
+import java.util.Iterator;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.level.gamerules.GameRules;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.util.Iterator;
 
 @Mixin(LivingEntity.class)
 public class LivingEntityMixin implements CombatLogPlayerRemoval {

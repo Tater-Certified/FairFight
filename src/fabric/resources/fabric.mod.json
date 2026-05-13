@@ -13,15 +13,8 @@
   "license": "${license}",
   "icon": "${mod_name}.png",
   "environment": "*",
-  "entrypoints": {
-    "main": [
-      "com.github.tatercertified.fabric.FairFightFabric"
-    ],
-    "client": [],
-    "server": []
-  },
   "mixins": [
-    "fairfight.mixins.fabric.json"
+    "fairfight.mixins.vanilla.json"
   ],
   "depends": {
     "fabricloader": "*",

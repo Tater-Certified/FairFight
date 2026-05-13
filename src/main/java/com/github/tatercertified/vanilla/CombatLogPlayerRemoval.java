@@ -4,9 +4,8 @@
  */
 package com.github.tatercertified.vanilla;
 
-import net.minecraft.server.level.ServerPlayer;
-
 import java.util.Iterator;
+import net.minecraft.server.level.ServerPlayer;
 
 public interface CombatLogPlayerRemoval {
     void removePlayer(Iterator<ServerPlayer> players, ServerPlayer current);

@@ -5,11 +5,9 @@
 package com.github.tatercertified.vanilla.mixin;
 
 import com.github.tatercertified.vanilla.FairFight;
-
 import net.minecraft.world.level.gamerules.GameRule;
 import net.minecraft.world.level.gamerules.GameRuleCategory;
 import net.minecraft.world.level.gamerules.GameRules;
-
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -22,13 +20,13 @@ public abstract class GameRuleRegistrationMixin {
 
     @Shadow
     private static GameRule<Integer> registerInteger(
-            String name, GameRuleCategory category, int defaultValue, int minValue) {
+            String id, GameRuleCategory category, int defaultValue, int min) {
         return null;
     }
 
     @Shadow
     private static GameRule<Boolean> registerBoolean(
-            String name, GameRuleCategory category, boolean defaultValue) {
+            String id, GameRuleCategory category, boolean defaultValue) {
         return null;
     }
 

@@ -6,20 +6,17 @@ package com.github.tatercertified.vanilla.mixin;
 
 import com.github.tatercertified.vanilla.CombatLogPlayerRemoval;
 import com.github.tatercertified.vanilla.FairFight;
-
+import java.util.Iterator;
+import java.util.function.BooleanSupplier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.phys.Vec3;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.util.Iterator;
-import java.util.function.BooleanSupplier;
 
 @Mixin(MinecraftServer.class)
 public abstract class MinecraftServerMixin {
@@ -27,7 +24,7 @@ public abstract class MinecraftServerMixin {
     public abstract int getTickCount();
 
     @Inject(method = "tickServer", at = @At("TAIL"))
-    private void fairfight$tickFakePlayers(BooleanSupplier hasTimeLeft, CallbackInfo ci) {
+    private void fairfight$tickFakePlayers(BooleanSupplier haveTime, CallbackInfo ci) {
         Iterator<ServerPlayer> iterator2 = FairFight.COMBAT_LOG_LIST.values().iterator();
         while (iterator2.hasNext()) {
             ServerPlayer player = iterator2.next();

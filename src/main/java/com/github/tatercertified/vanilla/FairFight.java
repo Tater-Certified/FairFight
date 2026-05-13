@@ -4,16 +4,14 @@
  */
 package com.github.tatercertified.vanilla;
 
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.level.gamerules.GameRule;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.gamerules.GameRule;
 
 public class FairFight {
     public static final Map<UUID, ServerPlayer> COMBAT_LOG_LIST = new HashMap<>();
-    public static final String MOD_ID = "fairfight";
 
     public static GameRule<Integer> IN_COMBAT_TIME;
     public static GameRule<Boolean> COMBAT_TIME_SHOWN;

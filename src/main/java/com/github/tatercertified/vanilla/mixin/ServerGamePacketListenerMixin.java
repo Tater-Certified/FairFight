@@ -8,12 +8,10 @@ import com.github.tatercertified.vanilla.CombatLogger;
 import com.github.tatercertified.vanilla.FairFight;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import net.minecraft.server.players.PlayerList;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -30,11 +28,11 @@ public class ServerGamePacketListenerMixin {
                             target =
                                     "Lnet/minecraft/server/players/PlayerList;remove(Lnet/minecraft/server/level/ServerPlayer;)V"))
     private void fairfight$removePlayerFromWorld(
-            PlayerList instance, ServerPlayer serverPlayer, Operation<Void> original) {
-        if (!CombatLogger.isInCombat(serverPlayer)) {
-            original.call(instance, serverPlayer);
+            PlayerList instance, ServerPlayer player, Operation<Void> original) {
+        if (!CombatLogger.isInCombat(player)) {
+            original.call(instance, player);
         } else {
-            FairFight.COMBAT_LOG_LIST.put(serverPlayer.getUUID(), serverPlayer);
+            FairFight.COMBAT_LOG_LIST.put(player.getUUID(), player);
         }
     }
 
@@ -46,9 +44,9 @@ public class ServerGamePacketListenerMixin {
                             target =
                                     "Lnet/minecraft/server/players/PlayerList;broadcastSystemMessage(Lnet/minecraft/network/chat/Component;Z)V"))
     private void fairfight$removePlayerFromWorld(
-            PlayerList instance, Component component, boolean bl, Operation<Void> original) {
+            PlayerList instance, Component message, boolean overlay, Operation<Void> original) {
         if (!CombatLogger.isInCombat(this.player)) {
-            original.call(instance, component, bl);
+            original.call(instance, message, overlay);
         } else {
             FairFight.COMBAT_LOG_LIST.put(this.player.getUUID(), this.player);
         }

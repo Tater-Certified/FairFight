@@ -9,18 +9,15 @@ import com.github.tatercertified.vanilla.FairFight;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
-
+import java.util.HashMap;
+import java.util.UUID;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.PlayerList;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import java.util.HashMap;
-import java.util.UUID;
 
 @Mixin(PlayerList.class)
 public class PlayerListMixin {
@@ -52,14 +49,14 @@ public class PlayerListMixin {
     private void fairfight$cancelLoginMessage(
             PlayerList instance,
             Component message,
-            boolean bypassHiddenChat,
+            boolean overlay,
             Operation<Void> original,
             @Local(argsOnly = true) ServerPlayer serverPlayer) {
         if (transferredCombatData.containsKey(serverPlayer.getUUID())) {
             ((CombatLogger) serverPlayer.getCombatTracker())
                     .copyCombatStatus(transferredCombatData.remove(serverPlayer.getUUID()));
         } else {
-            original.call(instance, message, bypassHiddenChat);
+            original.call(instance, message, overlay);
         }
     }
 }
