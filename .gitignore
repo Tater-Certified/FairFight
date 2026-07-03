@@ -4,3 +4,5 @@
 /buildSrc/.gradle
 /buildSrc/build
 /build
+/run/
+/run*/
