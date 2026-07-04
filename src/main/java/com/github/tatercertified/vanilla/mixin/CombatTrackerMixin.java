@@ -7,11 +7,11 @@ package com.github.tatercertified.vanilla.mixin;
 import com.github.tatercertified.vanilla.CombatLogger;
 import com.github.tatercertified.vanilla.FairFight;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.CombatTracker;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Final;
@@ -52,7 +52,7 @@ public class CombatTrackerMixin implements CombatLogger {
                                     "Lnet/minecraft/world/damagesource/CombatTracker;combatStartTime:I",
                             opcode = Opcodes.PUTFIELD))
     private void fairfight$recordDamage(DamageSource source, float damage, CallbackInfo ci) {
-        if (source.getEntity() instanceof Player) {
+        if (source.getEntity() instanceof ServerPlayer) {
             inPlayerCombat = true;
         }
     }
@@ -61,14 +61,11 @@ public class CombatTrackerMixin implements CombatLogger {
             method = "recordDamage",
             at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z"))
     private void fairfight$setLastDamageTime(DamageSource source, float damage, CallbackInfo ci) {
-        if (source.getEntity() instanceof Player attacker) {
+        if (source.getEntity() instanceof ServerPlayer attacker) {
             lastPlayerDamageTime = this.mob.tickCount;
-            if (this.mob instanceof Player
-                    && attacker != this.mob
-                    && !this.mob.level().isClientSide()
-                    && ((ServerLevel) this.mob.level())
-                            .getGameRules()
-                            .get(FairFight.TAG_ATTACKERS)) {
+            if (this.mob instanceof ServerPlayer victim
+                    && attacker != victim
+                    && victim.level().getGameRules().get(FairFight.TAG_ATTACKERS)) {
                 ((CombatLogger) attacker.getCombatTracker()).markPlayerCombat();
             }
         }
