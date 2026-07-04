@@ -10,7 +10,6 @@ import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.protocol.Packet;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import net.minecraft.server.players.PlayerList;
@@ -24,7 +23,7 @@ public class ServerGamePacketListenerMixin {
     @Shadow public ServerPlayer player;
 
     @WrapMethod(method = {"handleChatCommand", "handleSignedChatCommand"})
-    private void fairfight$wrapCommand(@Coerce Packet<?> packet, Operation<Void> original) {
+    private void fairfight$wrapCommand(@Coerce Object packet, Operation<Void> original) {
         if (this.player.level().getGameRules().get(FairFight.DISABLE_COMMANDS_IN_PVP)
                 && ((CombatLogger) this.player.getCombatTracker()).isInPlayerCombat()) {
             this.player.sendSystemMessage(
