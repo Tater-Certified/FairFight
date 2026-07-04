@@ -16,6 +16,8 @@ public interface CombatLogger {
 
     int getCombatSecondsLeft();
 
+    void markPlayerCombat();
+
     void copyCombatStatus(Object[] combatInfo);
 
     Object[] getCombatTrackerInfo();

@@ -47,5 +47,8 @@ public abstract class GameRuleRegistrationMixin {
                 registerBoolean("combat_logger_players_only", GameRuleCategory.PLAYER, true);
         FairFight.DISABLE_ELYTRA_IN_COMBAT =
                 registerBoolean("disable_elytra_in_combat", GameRuleCategory.PLAYER, false);
+        FairFight.DISABLE_COMMANDS_IN_PVP =
+                registerBoolean("disable_commands_in_pvp", GameRuleCategory.PLAYER, false);
+        FairFight.TAG_ATTACKERS = registerBoolean("tag_attackers", GameRuleCategory.PLAYER, false);
     }
 }

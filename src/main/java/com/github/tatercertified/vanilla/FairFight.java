@@ -17,4 +17,6 @@ public class FairFight {
     public static GameRule<Boolean> COMBAT_TIME_SHOWN;
     public static GameRule<Boolean> COMBAT_LOGGER_PLAYERS_ONLY;
     public static GameRule<Boolean> DISABLE_ELYTRA_IN_COMBAT;
+    public static GameRule<Boolean> DISABLE_COMMANDS_IN_PVP;
+    public static GameRule<Boolean> TAG_ATTACKERS;
 }
