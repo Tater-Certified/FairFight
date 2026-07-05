@@ -15,6 +15,8 @@ the game should wait until the player is considered not in combat. By default, t
 - `combat_time_shown`: Toggles the combat time cooldown overlay.
 - `combat_logger_players_only`: Only counts combat between players and ignores other mobs
 - `disable_elytra_in_combat`: Disables elytra flight when in combat
+- `disable_commands_in_pvp`: Disables command execution when in combat
+- `tag_attackers`: Whether to apply all features (combat timer) of this to the player that is attacking other players
 
 ---
 
