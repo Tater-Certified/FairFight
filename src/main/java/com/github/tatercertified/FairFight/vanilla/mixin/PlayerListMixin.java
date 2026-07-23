@@ -2,10 +2,10 @@
  * Copyright (c) 2026 QPCrummer
  * This project is Licensed under <a href="https://github.com/Tater-Certified/FairFight/blob/main/LICENSE">MIT</a>
  */
-package com.github.tatercertified.vanilla.mixin;
+package com.github.tatercertified.FairFight.vanilla.mixin;
 
-import com.github.tatercertified.vanilla.CombatLogger;
-import com.github.tatercertified.vanilla.FairFight;
+import com.github.tatercertified.FairFight.vanilla.CombatLogger;
+import com.github.tatercertified.FairFight.vanilla.FairFight;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;

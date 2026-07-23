@@ -2,10 +2,10 @@
  * Copyright (c) 2026 QPCrummer
  * This project is Licensed under <a href="https://github.com/Tater-Certified/FairFight/blob/main/LICENSE">MIT</a>
  */
-package com.github.tatercertified.vanilla.mixin;
+package com.github.tatercertified.FairFight.vanilla.mixin;
 
-import com.github.tatercertified.vanilla.CombatLogger;
-import com.github.tatercertified.vanilla.FairFight;
+import com.github.tatercertified.FairFight.vanilla.CombatLogger;
+import com.github.tatercertified.FairFight.vanilla.FairFight;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;

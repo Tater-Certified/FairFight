@@ -7,15 +7,15 @@
   },
   "package": "com.github.tatercertified.vanilla.mixin",
   "mixins": [
-    "CombatTrackerMixin",
-    "GameRuleRegistrationMixin",
-    "LivingEntityMixin",
-    "MinecraftServerMixin",
-    "PlayerListMixin",
-    "PlayerMixin",
-    "ServerGamePacketListenerImplInvokerMixin",
-    "ServerGamePacketListenerMixin",
-    "ServerPlayerMixin"
+    "com.github.tatercertified.FairFight.vanilla.mixin.CombatTrackerMixin",
+    "com.github.tatercertified.FairFight.vanilla.mixin.GameRuleRegistrationMixin",
+    "com.github.tatercertified.FairFight.vanilla.mixin.LivingEntityMixin",
+    "com.github.tatercertified.FairFight.vanilla.mixin.MinecraftServerMixin",
+    "com.github.tatercertified.FairFight.vanilla.mixin.PlayerListMixin",
+    "com.github.tatercertified.FairFight.vanilla.mixin.PlayerMixin",
+    "com.github.tatercertified.FairFight.vanilla.mixin.ServerGamePacketListenerImplInvokerMixin",
+    "com.github.tatercertified.FairFight.vanilla.mixin.ServerGamePacketListenerMixin",
+    "com.github.tatercertified.FairFight.vanilla.mixin.ServerPlayerMixin"
   ],
   "client": [],
   "server": []
