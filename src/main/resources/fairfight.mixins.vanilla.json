@@ -5,17 +5,17 @@
   "injectors": {
     "defaultRequire": 1
   },
-  "package": "com.github.tatercertified.vanilla.mixin",
+  "package": "com.github.tatercertified.fairfight.vanilla.mixin",
   "mixins": [
-    "com.github.tatercertified.FairFight.vanilla.mixin.CombatTrackerMixin",
-    "com.github.tatercertified.FairFight.vanilla.mixin.GameRuleRegistrationMixin",
-    "com.github.tatercertified.FairFight.vanilla.mixin.LivingEntityMixin",
-    "com.github.tatercertified.FairFight.vanilla.mixin.MinecraftServerMixin",
-    "com.github.tatercertified.FairFight.vanilla.mixin.PlayerListMixin",
-    "com.github.tatercertified.FairFight.vanilla.mixin.PlayerMixin",
-    "com.github.tatercertified.FairFight.vanilla.mixin.ServerGamePacketListenerImplInvokerMixin",
-    "com.github.tatercertified.FairFight.vanilla.mixin.ServerGamePacketListenerMixin",
-    "com.github.tatercertified.FairFight.vanilla.mixin.ServerPlayerMixin"
+    "com.github.tatercertified.fairfight.vanilla.mixin.CombatTrackerMixin",
+    "com.github.tatercertified.fairfight.vanilla.mixin.GameRuleRegistrationMixin",
+    "com.github.tatercertified.fairfight.vanilla.mixin.LivingEntityMixin",
+    "com.github.tatercertified.fairfight.vanilla.mixin.MinecraftServerMixin",
+    "com.github.tatercertified.fairfight.vanilla.mixin.PlayerListMixin",
+    "com.github.tatercertified.fairfight.vanilla.mixin.PlayerMixin",
+    "com.github.tatercertified.fairfight.vanilla.mixin.ServerGamePacketListenerImplInvokerMixin",
+    "com.github.tatercertified.fairfight.vanilla.mixin.ServerGamePacketListenerMixin",
+    "com.github.tatercertified.fairfight.vanilla.mixin.ServerPlayerMixin"
   ],
   "client": [],
   "server": []
