@@ -2,10 +2,10 @@
  * Copyright (c) 2026 QPCrummer
  * This project is Licensed under <a href="https://github.com/Tater-Certified/FairFight/blob/main/LICENSE">MIT</a>
  */
-package com.github.tatercertified.vanilla.mixin;
+package com.github.tatercertified.fairfight.vanilla.mixin;
 
-import com.github.tatercertified.vanilla.CombatLogger;
-import com.github.tatercertified.vanilla.FairFight;
+import com.github.tatercertified.fairfight.vanilla.CombatLogger;
+import com.github.tatercertified.fairfight.vanilla.FairFight;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
