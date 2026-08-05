@@ -9,15 +9,18 @@ combat! This will allow the person who was attacking them to continue attacking 
 ---
 
 ## Configuration
-This mod has 4 gamerules:
+This mod has 8 gamerules:
 - `in_combat_ticks`: Allows you to set how many ticks after being attacked
 the game should wait until the player is considered not in combat. By default, this is 300 ticks (15s).
 - `combat_time_shown`: Toggles the combat time cooldown overlay.
 - `combat_logger_players_only`: Only counts combat between players and ignores other mobs
 - `disable_elytra_in_combat`: Disables elytra flight when in combat
 - `disable_commands_in_pvp`: Disables command execution when in combat
-- `tag_attackers`: Whether to apply all features (combat timer) of this to the player that is attacking other players
+- `tag_attackers`: Whether to apply all features (combat timer, disable elytra, etc.) of this mod to all players involved in the PvP
 - `respawn_invulnerability_seconds`: The number of seconds a player is invulnerable after respawning. Default is 0 seconds
+- `begin_invulnerability_countdown_seconds`: When to begin counting down the number of seconds remaining for invulnerability
+
+**Note:** Do NOT enable invulnerability if you have Tater Certified's LifeSteal mod. It features a very similar invulnerability feature and is fundamentally incompatible with Fair Fight's implementation
 
 ---
 

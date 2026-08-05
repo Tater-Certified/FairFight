@@ -58,7 +58,13 @@ public abstract class ServerPlayerMixin extends Player implements PlayerInvulner
 
     @Inject(method = "restoreFrom", at = @At("TAIL"))
     private void fairfight$setInvulnerability(ServerPlayer oldPlayer, boolean restoreAll, CallbackInfo ci) {
-        this.playerDamageInvulnerabilityTicks = this.level().getServer().getGameRules().get(FairFight.RESPAWN_INVULNERABILITY_SECONDS) * 20L;
+        int secs = this.level().getServer().getGameRules().get(FairFight.RESPAWN_INVULNERABILITY_SECONDS);
+        this.playerDamageInvulnerabilityTicks = secs * 20L;
+        if (secs == 1) {
+            this.sendOverlayMessage(Component.literal("You have 1 second of invulnerability."));
+        } else {
+            this.sendOverlayMessage(Component.literal("You have " + secs + " seconds of invulnerability."));
+        }
     }
 
     @Inject(method = "tick", at = @At("TAIL"))
@@ -67,6 +73,14 @@ public abstract class ServerPlayerMixin extends Player implements PlayerInvulner
             // Send this when on the last tick
             if (this.playerDamageInvulnerabilityTicks == 1) {
                 this.sendOverlayMessage(Component.literal("You are now vulnerable to players").withColor(TextColor.RED));
+            } else if (this.playerDamageInvulnerabilityTicks <= (20L * this.level().getServer().getGameRules().get(FairFight.BEGIN_INVULNERABILITY_COUNTDOWN_SECONDS)) && this.playerDamageInvulnerabilityTicks % 20 == 0) {
+                // Start countdown
+                int seconds = (int) (this.playerDamageInvulnerabilityTicks / 20);
+                if (seconds == 1) {
+                    this.sendOverlayMessage(Component.literal("1 second remaining of invulnerability"));
+                } else {
+                    this.sendOverlayMessage(Component.literal(seconds + " seconds remaining of invulnerability"));
+                }
             }
             this.playerDamageInvulnerabilityTicks--;
         }

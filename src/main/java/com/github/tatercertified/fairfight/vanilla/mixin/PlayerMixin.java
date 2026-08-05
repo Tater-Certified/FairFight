@@ -45,7 +45,7 @@ public abstract class PlayerMixin {
     private void fairfight$preventAttackingPlayers(Entity entity, Operation<Void> original) {
         if (((Player) (Object) this) instanceof PlayerInvulnerable playerInvulnerable
                 && playerInvulnerable.isInvulnerableToPlayers()
-                && entity instanceof ServerPlayer) {
+                && entity instanceof Player) {
             this.sendOverlayMessage(Component.literal("You cannot kill players since you are invulnerable"));
         } else {
             original.call(entity);

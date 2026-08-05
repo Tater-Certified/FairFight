@@ -52,5 +52,7 @@ public abstract class GameRuleRegistrationMixin {
         FairFight.TAG_ATTACKERS = registerBoolean("tag_attackers", GameRuleCategory.PLAYER, false);
         FairFight.RESPAWN_INVULNERABILITY_SECONDS =
                 registerInteger("respawn_invulnerability_seconds", GameRuleCategory.PLAYER, 0, 0);
+        FairFight.BEGIN_INVULNERABILITY_COUNTDOWN_SECONDS =
+                registerInteger("begin_invulnerability_countdown_seconds", GameRuleCategory.PLAYER, 0, 0);
     }
 }
