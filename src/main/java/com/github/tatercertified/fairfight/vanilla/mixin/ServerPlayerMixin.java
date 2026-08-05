@@ -54,7 +54,10 @@ public abstract class ServerPlayerMixin extends Player implements PlayerInvulner
             this.level().getServer().getPlayerList().remove((ServerPlayer) (Object) this);
             FairFight.COMBAT_LOG_LIST.remove(this.getUUID());
         }
+    }
 
+    @Inject(method = "restoreFrom", at = @At("TAIL"))
+    private void fairfight$setInvulnerability(ServerPlayer oldPlayer, boolean restoreAll, CallbackInfo ci) {
         this.playerDamageInvulnerabilityTicks = this.level().getServer().getGameRules().get(FairFight.RESPAWN_INVULNERABILITY_SECONDS) * 20L;
     }
 
