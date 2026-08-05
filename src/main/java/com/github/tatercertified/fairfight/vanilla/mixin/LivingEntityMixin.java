@@ -73,7 +73,7 @@ public class LivingEntityMixin implements CombatLogPlayerRemoval {
     }
 
     @Inject(
-            method = "knockback",
+            method = "knockback*",
             at =
                     @At(
                             value = "INVOKE",

@@ -17,6 +17,7 @@ the game should wait until the player is considered not in combat. By default, t
 - `disable_elytra_in_combat`: Disables elytra flight when in combat
 - `disable_commands_in_pvp`: Disables command execution when in combat
 - `tag_attackers`: Whether to apply all features (combat timer) of this to the player that is attacking other players
+- `respawn_invulnerability_seconds`: The number of seconds a player is invulnerable after respawning. Default is 0 seconds
 
 ---
 

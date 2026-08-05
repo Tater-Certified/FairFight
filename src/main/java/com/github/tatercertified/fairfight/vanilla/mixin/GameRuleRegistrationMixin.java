@@ -50,5 +50,7 @@ public abstract class GameRuleRegistrationMixin {
         FairFight.DISABLE_COMMANDS_IN_PVP =
                 registerBoolean("disable_commands_in_pvp", GameRuleCategory.PLAYER, false);
         FairFight.TAG_ATTACKERS = registerBoolean("tag_attackers", GameRuleCategory.PLAYER, false);
+        FairFight.RESPAWN_INVULNERABILITY_SECONDS =
+                registerInteger("respawn_invulnerability_seconds", GameRuleCategory.PLAYER, 0, 0);
     }
 }

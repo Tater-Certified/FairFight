@@ -19,4 +19,5 @@ public class FairFight {
     public static GameRule<Boolean> DISABLE_ELYTRA_IN_COMBAT;
     public static GameRule<Boolean> DISABLE_COMMANDS_IN_PVP;
     public static GameRule<Boolean> TAG_ATTACKERS;
+    public static GameRule<Integer> RESPAWN_INVULNERABILITY_SECONDS;
 }

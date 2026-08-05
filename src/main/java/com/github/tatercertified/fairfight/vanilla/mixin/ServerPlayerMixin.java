@@ -6,9 +6,11 @@ package com.github.tatercertified.fairfight.vanilla.mixin;
 
 import com.github.tatercertified.fairfight.vanilla.CombatLogger;
 import com.github.tatercertified.fairfight.vanilla.FairFight;
+import com.github.tatercertified.fairfight.vanilla.PlayerInvulnerable;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
@@ -20,9 +22,12 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ServerPlayer.class)
-public abstract class ServerPlayerMixin extends Player {
+public abstract class ServerPlayerMixin extends Player implements PlayerInvulnerable {
+    private long playerDamageInvulnerabilityTicks;
+
     public ServerPlayerMixin(Level level, GameProfile gameProfile) {
         super(level, gameProfile);
     }
@@ -32,6 +37,9 @@ public abstract class ServerPlayerMixin extends Player {
 
     @Shadow
     public abstract boolean hasDisconnected();
+
+    @Shadow
+    public abstract void sendOverlayMessage(Component message);
 
     @Inject(method = "die", at = @At("TAIL"))
     private void fairfight$onDeath(DamageSource damageSource, CallbackInfo ci) {
@@ -46,5 +54,32 @@ public abstract class ServerPlayerMixin extends Player {
             this.level().getServer().getPlayerList().remove((ServerPlayer) (Object) this);
             FairFight.COMBAT_LOG_LIST.remove(this.getUUID());
         }
+
+        this.playerDamageInvulnerabilityTicks = this.level().getServer().getGameRules().get(FairFight.RESPAWN_INVULNERABILITY_SECONDS) * 20L;
+    }
+
+    @Inject(method = "tick", at = @At("TAIL"))
+    private void fairfight$decreaseInvulnerability(CallbackInfo ci) {
+        if (this.playerDamageInvulnerabilityTicks > 0) {
+            // Send this when on the last tick
+            if (this.playerDamageInvulnerabilityTicks == 1) {
+                this.sendOverlayMessage(Component.literal("You are now vulnerable to players").withColor(TextColor.RED));
+            }
+            this.playerDamageInvulnerabilityTicks--;
+        }
+    }
+
+    // You cannot be killed by players if invulnerable
+    @Inject(method = "canHarmPlayer", at = @At("HEAD"), cancellable = true)
+    private void fairfight$checkInvulnerability(Player target, CallbackInfoReturnable<Boolean> cir) {
+        if (this.isInvulnerableToPlayers()) {
+            target.sendOverlayMessage(Component.literal("This player has respawn invulnerability"));
+            cir.setReturnValue(false);
+        }
+    }
+
+    @Override
+    public boolean isInvulnerableToPlayers() {
+        return this.playerDamageInvulnerabilityTicks > 0;
     }
 }
